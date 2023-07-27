@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarsLander.Console", "MarsLander.Console\MarsLander.Console.csproj", "{1D0EFB90-633D-4D26-8BD3-26BB85AA922B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarsLander.UI", "MarsLander.UI\MarsLander.UI.csproj", "{96BC1EC8-E218-45E6-8B15-71B2DFAB6B08}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1D0EFB90-633D-4D26-8BD3-26BB85AA922B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1D0EFB90-633D-4D26-8BD3-26BB85AA922B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1D0EFB90-633D-4D26-8BD3-26BB85AA922B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1D0EFB90-633D-4D26-8BD3-26BB85AA922B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{96BC1EC8-E218-45E6-8B15-71B2DFAB6B08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{96BC1EC8-E218-45E6-8B15-71B2DFAB6B08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{96BC1EC8-E218-45E6-8B15-71B2DFAB6B08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{96BC1EC8-E218-45E6-8B15-71B2DFAB6B08}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
