@@ -2,7 +2,6 @@
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
         <TargetFramework>net7.0</TargetFramework>
-        <Nullable>enable</Nullable>
         <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
         <ApplicationManifest>app.manifest</ApplicationManifest>
         <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
@@ -10,16 +9,16 @@
 
 
     <ItemGroup>
-        <PackageReference Include="Avalonia" Version="11.0.0" />
-        <PackageReference Include="Avalonia.Desktop" Version="11.0.0" />
-        <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.0" />
-        <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.0" />
+        <PackageReference Include="Avalonia" Version="11.0.0"/>
+        <PackageReference Include="Avalonia.Desktop" Version="11.0.0"/>
+        <PackageReference Include="Avalonia.Themes.Fluent" Version="11.0.0"/>
+        <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.0"/>
         <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.0" />
+        <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.0"/>
     </ItemGroup>
 
 
     <ItemGroup>
-      <ProjectReference Include="..\MarsLander.Console\MarsLander.Console.csproj" />
+        <ProjectReference Include="..\MarsLander.Console\MarsLander.Console.csproj"/>
     </ItemGroup>
 </Project>

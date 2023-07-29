@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Avalonia.Controls;
@@ -11,9 +12,9 @@ namespace MarsLander.UI;
 public partial class MainWindow : Window
 {
     private readonly Point[] map;
-    private readonly Lander lander;
     private readonly Game game;
     private readonly Line finish;
+    private readonly GeneticAlgorithm ga;
 
     public MainWindow()
     {
@@ -27,9 +28,9 @@ public partial class MainWindow : Window
             new Point(5500, 150),
             new Point(6999, 800),
         };
-        lander = new Lander(new Point(2500, 2700), 0, 0, 550, 0, 0);
-        game = new Game(map, lander);
-        finish = game.Map.First(x => x.IsFinish);
+        game = new Game(map, new Lander(new Point(2500, 2700), 0, 0, 550, 0, 0));
+        finish = game.Finish;
+        ga = new GeneticAlgorithm(game);
 
         InitializeComponent();
     }
@@ -65,33 +66,44 @@ public partial class MainWindow : Window
 
         var player = new Ellipse
         {
+            Fill = new LinearGradientBrush
+            {
+                GradientStops =
+                {
+                    new GradientStop(Colors.White, 0.3),
+                    new GradientStop(Colors.Blue, 1)
+                }
+            },
             Stroke = game.State switch
             {
                 GameState.Landed => Brushes.LimeGreen,
-                GameState.Crashed => Brushes.Red,
+                GameState.Crashed or GameState.CrashedOnFinish => Brushes.Red,
                 _ => Brushes.White,
             },
             StrokeThickness = 1,
-            Width = 40,
+            Width = 20,
             Height = 40,
+            RenderTransform = new RotateTransform(-game.Lander.Angle)
         };
-        Canvas.SetLeft(player, lander.Position.X * kx);
-        Canvas.SetTop(player, Canvas.Bounds.Height - lander.Position.Y * ky - player.Height / 2);
+        Canvas.SetLeft(player, game.Lander.Position.X * kx);
+        Canvas.SetTop(player, Canvas.Bounds.Height - game.Lander.Position.Y * ky - player.Height / 2);
 
         Canvas.Children.Add(ground);
         Canvas.Children.Add(finishLine);
         Canvas.Children.Add(player);
     }
 
-    private async Task PlayAll()
+    private async Task PlayAll(Move[] moves)
     {
-        do
+        for (var i = 0; i < moves.Length && !game.HasEnded; i++)
         {
-            game.Play(new Move(0, 0));
+            game.Play(moves[i]);
             Render();
 
             await Task.Delay(100);
-        } while (!game.HasEnded);
+        }
+
+        await Console.Error.WriteLineAsync($"{game.State} - {game.Lander.Angle} - {game.Lander.HorizontalSpeed} - {game.Lander.VerticalSpeed}");
     }
 
     protected override void OnLoaded(RoutedEventArgs e)
@@ -108,6 +120,16 @@ public partial class MainWindow : Window
         Render();
     }
 
-    private async void PlayAll_OnClick(object? sender, RoutedEventArgs e)
-        => await PlayAll();
+    private async void PlayAll_OnClick(object sender, RoutedEventArgs e)
+        => await PlayAll(
+            Enumerable.Range(0, 200)
+                .Select(_ => new Move(0, 0))
+                .ToArray());
+
+    private async void Train_OnClick(object sender, RoutedEventArgs e)
+    {
+        var solution = ga.Train();
+
+        await PlayAll(solution.Moves);
+    }
 }
